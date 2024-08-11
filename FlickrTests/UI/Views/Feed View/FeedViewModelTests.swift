@@ -43,7 +43,7 @@ final class FeedViewModelTests: XCTestCase {
         XCTAssertEqual(sut.state, .loading)
         XCTAssertTrue(sut.searchResults.isEmpty)
 
-        // Act
+        // Act. Waiting for debounce.
         try await Task.sleep(for: .seconds(0.2))
 
         // Assert
@@ -95,7 +95,7 @@ final class FeedViewModelTests: XCTestCase {
         XCTAssertEqual(sut.state, .loading)
         XCTAssertTrue(sut.searchResults.isEmpty)
 
-        // Act
+        // Act. Waiting for debounce.
         try await Task.sleep(for: .seconds(0.2))
 
         // Assert
