@@ -1,13 +1,14 @@
 import SwiftUI
 
-struct RemoteImageView: View {
+/// A view that asynchronously loads and displays an image.
+public struct RemoteImageView: View {
     // MARK: - Parameters
 
     @State var viewModel: RemoteImageViewModel
 
     // MARK: - Views
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             switch viewModel.state {
             case .loading:
@@ -24,4 +25,13 @@ struct RemoteImageView: View {
             await viewModel.fetchImage()
         }
     }
+}
+
+#Preview {
+    RemoteImageView(
+        viewModel: RemoteImageViewModel(
+            container: DIContainer.mock(),
+            mediaURL: FeedItem.valley.mediaURL
+        )
+    )
 }

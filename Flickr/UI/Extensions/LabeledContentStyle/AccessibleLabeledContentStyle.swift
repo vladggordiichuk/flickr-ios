@@ -3,11 +3,8 @@ import SwiftUI
 public struct AccessibleLabeledContentStyle: LabeledContentStyle {
     // MARK: - Parameters
 
-    @Environment(\.dynamicTypeSize.isAccessibilitySize) var isAccessibilitySize
-
-    private var isVerticalLayout: Bool {
-        isAccessibilitySize
-    }
+    /// Showing content vertically, when user chooses Dynamic Type of Accessibility size
+    @Environment(\.dynamicTypeSize.isAccessibilitySize) var isVerticalLayout
 
     // MARK: - Views
 
