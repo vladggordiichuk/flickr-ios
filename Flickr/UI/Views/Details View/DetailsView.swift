@@ -38,7 +38,7 @@ struct DetailsView: View {
             .navigationTitle(Localized.navigationTitle)
             .toolbarTitleDisplayMode(.inline)
             .toolbar {
-                Button(LocalizedGeneral.Button.Done.title, systemImage: "xmark.circle.fill") {
+                Button(LocalizedGeneral.Button.Close.title, systemImage: "xmark.circle.fill") {
                     dismiss()
                 }
             }
@@ -62,6 +62,7 @@ struct DetailsView: View {
         }
         .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
         .listRowBackground(Color.clear)
+        .accessibilityHidden(true)
     }
 
     @ViewBuilder @MainActor
@@ -80,6 +81,7 @@ struct DetailsView: View {
 
                 LabeledContent(Localized.Label.ImageSize.title) {
                     Text(Localized.Label.ImageSize.value(imageWidth, imageHeight))
+                        .accessibilityLabel(Localized.Label.ImageSize.valueA11yLabel(imageWidth, imageHeight))
                 }
             }
         }

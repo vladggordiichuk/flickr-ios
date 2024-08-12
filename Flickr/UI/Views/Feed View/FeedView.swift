@@ -48,6 +48,8 @@ struct FeedView: View {
         }
     }
 
+    // MARK: - View States
+
     @ViewBuilder @MainActor
     private var idleView: some View {
         ContentUnavailableView(
@@ -100,14 +102,16 @@ struct FeedView: View {
             spacing: 1,
             pinnedViews: []
         ) {
-            ForEach(viewModel.searchResults, id: \.id) { item in
-                gridItemView(for: item)
+            ForEach(Array(viewModel.searchResults.enumerated()), id: \.element.id) { index, item in
+                gridItemView(for: item, index: index)
             }
         }
     }
 
+    // MARK: - Grid Item View
+
     @ViewBuilder @MainActor
-    private func gridItemView(for item: FeedItem) -> some View {
+    private func gridItemView(for item: FeedItem, index: Int) -> some View {
         Button(
             action: {
                 viewModel.selectItem(item)
@@ -127,6 +131,7 @@ struct FeedView: View {
                     }
                     .aspectRatio(1, contentMode: .fill)
                     .clipped()
+                    .contentShape(Rectangle())
             }
         )
         .buttonStyle(.plain)
@@ -136,22 +141,11 @@ struct FeedView: View {
                 Divider()
             }
 
-            Button(Localized.Button.SeeDetails.title, systemImage: "list.bullet.rectangle") {
-                viewModel.selectItem(item)
-            }
+            seeDetailsButton(item: item)
 
             if let link = item.link {
-                Link(destination: link) {
-                    Label(
-                        LocalizedGeneral.Button.OpenInSafari.title,
-                        systemImage: "safari"
-                    )
-                }
-
-                ShareLink(
-                    LocalizedGeneral.Button.ShareLink.title,
-                    item: link
-                )
+                openInSafariButton(link: link)
+                shareLinkButton(link: link)
             }
         } preview: {
             RemoteImageView(
@@ -161,6 +155,51 @@ struct FeedView: View {
                     transaction: Transaction(animation: .none)
                 )
             )
+        }
+        .accessibilityLabel(getGridItemA11yLabel(for: item))
+        .accessibilityInputLabels([Localized.Button.GridItem.a11yInputLabel(index)])
+        .accessibilityActions {
+            if let link = item.link {
+                openInSafariButton(link: link)
+                shareLinkButton(link: link)
+            }
+        }
+    }
+
+    // MARK: - Grid Item Buttons
+
+    @ViewBuilder @MainActor
+    private func seeDetailsButton(item: FeedItem) -> some View {
+        Button(Localized.Button.SeeDetails.title, systemImage: "list.bullet.rectangle") {
+            viewModel.selectItem(item)
+        }
+    }
+
+    @ViewBuilder @MainActor
+    private func openInSafariButton(link: URL) -> some View {
+        Link(destination: link) {
+            Label(
+                LocalizedGeneral.Button.OpenInSafari.title,
+                systemImage: "safari"
+            )
+        }
+    }
+
+    @ViewBuilder @MainActor
+    private func shareLinkButton(link: URL) -> some View {
+        ShareLink(
+            LocalizedGeneral.Button.ShareLink.title,
+            item: link
+        )
+    }
+
+    // MARK: - Helper Methods
+
+    func getGridItemA11yLabel(for item: FeedItem) -> String {
+        if let author = item.author {
+            return Localized.Button.GridItem.a11yLabel(item.title, author)
+        } else {
+            return item.title
         }
     }
 }

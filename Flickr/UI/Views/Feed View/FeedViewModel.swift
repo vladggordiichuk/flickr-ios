@@ -53,7 +53,6 @@ final class FeedViewModel {
                 scheduler: RunLoop.main
             )
             .filter { $0.count > 2 }
-            .print()
             .compactMap { [weak self] in
                 return self?.container.networkService.fetchPublicFeedPublisher(with: $0)
                     .catch { [weak self] _ in
@@ -70,7 +69,7 @@ final class FeedViewModel {
             .store(in: &cancellables)
     }
 
-    // MARK: - Interaction Method
+    // MARK: - Interaction Methods
 
     func selectItem(_ item: FeedItem) {
         selectedItem = item
