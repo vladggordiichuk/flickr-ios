@@ -38,7 +38,10 @@ struct DetailsView: View {
             .navigationTitle(Localized.navigationTitle)
             .toolbarTitleDisplayMode(.inline)
             .toolbar {
-                Button(LocalizedGeneral.Button.Close.title, systemImage: "xmark.circle.fill") {
+                Button(
+                    LocalizedGeneral.Button.Close.title,
+                    systemImage: SystemImage.Xmark.Circle.fill
+                ) {
                     dismiss()
                 }
             }
@@ -136,7 +139,7 @@ struct DetailsView: View {
                 Link(destination: link) {
                     Label(
                         LocalizedGeneral.Button.OpenInSafari.title,
-                        systemImage: "safari"
+                        systemImage: SystemImage.safari
                     )
                 }
                 

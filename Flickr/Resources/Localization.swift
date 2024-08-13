@@ -1,4 +1,4 @@
-import SwiftUI
+import Foundation
 
 enum Localization {
     // MARK: - General

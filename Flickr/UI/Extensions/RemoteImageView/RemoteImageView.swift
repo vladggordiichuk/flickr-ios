@@ -17,7 +17,7 @@ public struct RemoteImageView: View {
                 Image(uiImage: uiImage)
                     .resizable()
             case .error:
-                Image(systemName: "exclamationmark.triangle")
+                Image(systemName: SystemImage.ExclamationMark.triangle)
                     .imageScale(.large)
             }
         }

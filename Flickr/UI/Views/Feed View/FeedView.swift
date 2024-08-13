@@ -30,7 +30,7 @@ struct FeedView: View {
                     errorView
                 }
             }
-            .navigationTitle("flickr.")
+            .navigationTitle(Localized.navigationTitle)
         }
         .searchable(
             text: $viewModel.searchQuery,
@@ -68,7 +68,7 @@ struct FeedView: View {
     private var errorView: some View {
         ContentUnavailableView(
             Localized.ContentUnavailable.Error.title,
-            image: "exclamationmark.triangle",
+            image: SystemImage.ExclamationMark.triangle,
             description: Text(Localized.ContentUnavailable.Error.description)
         )
     }
@@ -169,7 +169,10 @@ struct FeedView: View {
 
     @ViewBuilder @MainActor
     private func seeDetailsButton(item: FeedItem) -> some View {
-        Button(Localized.Button.SeeDetails.title, systemImage: "list.bullet.rectangle") {
+        Button(
+            Localized.Button.SeeDetails.title,
+            systemImage: SystemImage.List.Bullet.rectangle
+        ) {
             viewModel.selectItem(item)
         }
     }
@@ -179,7 +182,7 @@ struct FeedView: View {
         Link(destination: link) {
             Label(
                 LocalizedGeneral.Button.OpenInSafari.title,
-                systemImage: "safari"
+                systemImage: SystemImage.safari
             )
         }
     }
