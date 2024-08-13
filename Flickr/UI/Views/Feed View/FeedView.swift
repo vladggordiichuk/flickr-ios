@@ -161,7 +161,6 @@ struct FeedView: View {
         .accessibilityActions {
             if let link = item.link {
                 openInSafariButton(link: link)
-                shareLinkButton(link: link)
             }
         }
     }
